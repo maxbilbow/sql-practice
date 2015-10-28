@@ -1,9 +1,10 @@
 use sql_tutorials;
 DROP TABLE IF EXISTS people_pets;
 DROP TABLE IF EXISTS prescription;
-DROP TABLE IF EXISTS `medication`;
+DROP TABLE IF EXISTS medication;
+DROP TABLE IF EXISTS pets;
 DROP TABLE IF EXISTS people;
-DROP TABLE IF EXISTS `pets`;
+DROP VIEW IF EXISTS PetsWithMoreThanOneOwner;
 
 CREATE TABLE `people` (
   `id` mediumint(8) unsigned NOT NULL auto_increment,
@@ -15,7 +16,7 @@ CREATE TABLE `people` (
   PRIMARY KEY (`id`)
 ) AUTO_INCREMENT=1;
 
-INSERT INTO people (`name`, `email`, `phone`, `address`, `favourite_number`) VALUES ("Simone", "risus.Nulla.eget@tincidunttempusrisus.co.uk", "0868 212 3666", "Ap #120-3795 Quis Rd.", 50),("Inez", "Nulla@nec.org", "0936 463 5845", "P.O. Box 243, 6798 Adipiscing Street", 68),("Alisa", "vel.mauris@ametluctus.com", "076 7859 1077", "P.O. Box 507, 1411 Scelerisque St.", 63),("Abbot", "dolor.Fusce@turpisegestasAliquam.edu", "0800 067704", "832-5601 Eros. St.", 14),("Miranda", "aliquam.iaculis@lacusvarius.net", "(021) 7518 7891", "7281 Elit, Rd.", 46),("Anne", "dictum.sapien.Aenean@Phasellusfermentum.ca", "0500 331178", "5495 Lorem, Street", 57),("Karina", "Donec@ligula.org", "0845 46 48", "6303 Non Rd.", 64),("Ahmed", "tempor.erat@gravida.ca", "07068 818541", "6458 Rutrum. St.", 53),("Cassidy", "auctor@etmagnaPraesent.ca", "(01336) 058400", "P.O. Box 254, 9903 Arcu St.", 97),("Patricia", "Sed.dictum@Inat.com", "0991 347 9266", "223-2907 Lacus. Street", 2);
+INSERT INTO people (`name`, `email`, `phone`, `address`, `favourite_number`) VALUES ("max", "risus.Nulla.eget@tincidunttempusrisus.co.uk", "0868 212 3666", "Ap #120-3795 Quis Rd.", 50),("emily", "Nulla@nec.org", "0936 463 5845", "P.O. Box 243, 6798 Adipiscing Street", 68),("Alisa", "vel.mauris@ametluctus.com", "076 7859 1077", "P.O. Box 507, 1411 Scelerisque St.", 63),("Abbot", "dolor.Fusce@turpisegestasAliquam.edu", "0800 067704", "832-5601 Eros. St.", 14),("Miranda", "aliquam.iaculis@lacusvarius.net", "(021) 7518 7891", "7281 Elit, Rd.", 46),("Anne", "dictum.sapien.Aenean@Phasellusfermentum.ca", "0500 331178", "5495 Lorem, Street", 57),("Karina", "Donec@ligula.org", "0845 46 48", "6303 Non Rd.", 64),("Ahmed", "tempor.erat@gravida.ca", "07068 818541", "6458 Rutrum. St.", 53),("Cassidy", "auctor@etmagnaPraesent.ca", "(01336) 058400", "P.O. Box 254, 9903 Arcu St.", 97),("Patricia", "Sed.dictum@Inat.com", "0991 347 9266", "223-2907 Lacus. Street", 2);
 INSERT INTO people (`name`, `email`, `phone`, `address`, `favourite_number`) VALUES ("Kirestin", "aliquet.Phasellus@lectus.ca", "0319 079 7237", "428-2551 Et Street", 52),("Omar", "mollis@aliquetmetusurna.edu", "0800 1111", "Ap #581-2009 Velit. Ave", 67),("Nevada", "consectetuer.rhoncus@primisinfaucibus.co.uk", "(021) 4621 8638", "9452 Donec Ave", 3),("Sydney", "hendrerit.id@etpede.edu", "07078 806104", "1692 Tellus Rd.", 19),("Mona", "nibh.enim.gravida@felis.co.uk", "07624 139014", "890-180 Vitae St.", 69),("Christian", "ante.lectus@mauris.ca", "0800 916819", "5541 Ut, Ave", 52),("Lana", "fringilla@vulputateposuerevulputate.ca", "0800 1111", "387-7760 Integer Road", 57),("Upton", "ipsum@nibhPhasellusnulla.edu", "(01558) 517683", "3895 Montes, Road", 99),("Adam", "nibh.lacinia.orci@neque.com", "0886 984 0826", "Ap #766-8841 Non Ave", 70),("Xerxes", "in.faucibus.orci@Aliquam.co.uk", "(01785) 48253", "P.O. Box 740, 177 Ornare Rd.", 63);
 INSERT INTO people (`name`, `email`, `phone`, `address`, `favourite_number`) VALUES ("Violet", "non.dui@elit.com", "07285 915331", "562-3163 Tellus, St.", 79),("Oren", "gravida.mauris.ut@afeugiattellus.com", "0800 237154", "Ap #358-9083 Vulputate, Street", 13),("Aaron", "auctor.quis@Phasellusdolor.edu", "(025) 8994 9868", "2362 Orci, Rd.", 39),("Phelan", "nascetur@Nam.ca", "(016977) 0137", "3522 Magna. Rd.", 32),("Dara", "ante.ipsum.primis@pellentesquea.com", "0800 1111", "P.O. Box 980, 4259 Sem Street", 98),("Joan", "non.sollicitudin@Donecfeugiat.org", "(0117) 864 5708", "821 Placerat. Rd.", 23),("Blair", "nibh@sedconsequatauctor.net", "(017918) 17069", "326-4393 Gravida St.", 42),("Cairo", "diam@Integer.edu", "(016977) 2319", "816-9284 Phasellus Rd.", 22),("Angela", "Mauris@CraspellentesqueSed.org", "0500 309722", "3499 Rutrum Ave", 34),("Emery", "montes.nascetur@Suspendissesagittis.net", "0845 46 42", "Ap #531-8186 Sem Avenue", 89);
 INSERT INTO people (`name`, `email`, `phone`, `address`, `favourite_number`) VALUES ("Belle", "leo.Morbi.neque@Phasellus.net", "(016977) 5900", "P.O. Box 648, 1484 Parturient Road", 97),("Yael", "nisi@imperdietnon.net", "076 8294 2231", "7557 Litora St.", 22),("Breanna", "id.risus.quis@orci.org", "0800 567 3110", "Ap #583-1058 Tincidunt Rd.", 15),("Elton", "Nunc@utmi.edu", "070 5100 6838", "Ap #184-9015 Vulputate, Av.", 5),("Jack", "dolor.dapibus.gravida@idenimCurabitur.com", "0838 974 6964", "2301 Porttitor Rd.", 44),("Vivian", "amet@tellus.com", "0800 1111", "P.O. Box 612, 6049 Est. Av.", 48),("Olga", "Nullam.feugiat.placerat@turpisegestasAliquam.ca", "(0110) 152 2364", "Ap #179-1846 Sed Rd.", 61),("Keaton", "tortor@nullamagna.net", "(01786) 543168", "P.O. Box 754, 7955 Urna. Avenue", 24),("Tanek", "orci@pretiumet.co.uk", "0800 358 1618", "785-906 A, St.", 44),("Kuame", "lorem@amet.com", "(0101) 787 5609", "Ap #610-7709 Praesent Rd.", 86);
@@ -38,7 +39,7 @@ CREATE TABLE `pets` (
   PRIMARY KEY (`id`)
 ) AUTO_INCREMENT=1;
 
-INSERT INTO `pets` (`name`,`animal`,`age`) VALUES ("Quentin","plank",22),("Violet","fish",20),("Rowan","dog",15),("Irene","cat",6),("Aristotle","chinchilla",6),("Idola","plank",20),("Vance","chinchilla",7),("Xantha","fish",6),("Orson","chinchilla",19),("Grant","chinchilla",17);
+INSERT INTO `pets` (`name`,`animal`,`age`) VALUES ("Poppy","dog",22),("Quentin","plank",20),("Rowan","dog",15),("Irene","cat",6),("Aristotle","chinchilla",6),("Idola","plank",20),("Vance","chinchilla",7),("Xantha","fish",6),("Orson","chinchilla",19),("Grant","chinchilla",17);
 INSERT INTO `pets` (`name`,`animal`,`age`) VALUES ("Victoria","parrot",4),("Christian","plank",8),("Heidi","parrot",4),("Hannah","dog",17),("Ivory","cat",14),("Kalia","dog",25),("Brennan","chinchilla",4),("Emerson","chinchilla",9),("Gage","chinchilla",11),("Roanna","dog",14);
 INSERT INTO `pets` (`name`,`animal`,`age`) VALUES ("Fredericka","chinchilla",19),("Charissa","parrot",4),("Derek","dog",22),("Guinevere","cat",12),("Kane","fish",8),("Anthony","plank",22),("Colton","fish",24),("Kiayada","chinchilla",7),("Melissa","fish",10),("Omar","cat",2);
 INSERT INTO `pets` (`name`,`animal`,`age`) VALUES ("Chester","chinchilla",15),("Jeanette","dog",9),("Britanni","parrot",10),("Vielka","plank",23),("Susan","parrot",14),("Idona","cat",23),("Yasir","fish",1),("Aretha","plank",26),("Olga","cat",19),("Cairo","chinchilla",18);
@@ -62,7 +63,10 @@ CREATE TABLE people_pets (
   FOREIGN KEY (pet_id) REFERENCES pets(id)
 );
 
-
+INSERT INTO people_pets (owner_id, pet_id) VALUES
+  (1,1),(2,1),(2,3),
+  (2,4),(2,5),(99,99),
+  (4,6);
 
 
 DROP TABLE IF EXISTS `medication`;
@@ -112,3 +116,19 @@ INSERT INTO prescription (medication_name, `daily_dose`, `patient_id`) VALUES ("
 INSERT INTO prescription (medication_name, `daily_dose`, `patient_id`) VALUES ("Amoxicillin", 7,41),("Lyrica", 8,41),("Potassium Chloride", 1,41),("Sertraline HCl", 8,41),("Lexapro", 5,41),("Alendronate Sodium", 1,41),("Simvastatin", 2,41),("Ibuprofen (Rx)", 1,51),("Sertraline HCl", 7,51),("Prednisone", 6,98);
 INSERT INTO prescription (medication_name, `daily_dose`, `patient_id`) VALUES ("Viagra", 9,51),("Venlafaxine HCl ER", 9,51),("Januvia", 8,51),("LevothyroxineSodium", 10,51),("Nexium", 9,51),("Allopurinol", 5,51),("Simvastatin", 4,51),("Clonazepam", 1,61),("Levoxyl", 9,62),("Clindamycin HCl", 6,3);
 
+
+
+
+#Views
+
+#Pets with more than 1 owner
+CREATE OR REPLACE VIEW PetsWithMoreThanOneOwner AS
+  SELECT people.name as Owner, pets.animal as pet, pets.name as "Pet's name"
+  FROM people
+    INNER JOIN people_pets
+      ON people.id = people_pets.owner_id AND (
+                                                SELECT COUNT(*) FROM people_pets p WHERE p.pet_id=people_pets.pet_id
+                                              ) > 1
+    #        AND group_elements.GroupID = 3
+    INNER JOIN pets
+      ON people_pets.pet_id = pets.id

@@ -100,4 +100,28 @@ WHERE unionB.id IS NULL
 
 SELECT  count(unionA.name) FROM unionA;
 
-# ORDER BY people.name;
+# SELECT * INTO temp_ppl FROM people;
+CREATE TABLE temp_ppl SELECT * FROM people;
+
+
+
+SELECT people.id, people.name, pets.animal, pets.name
+FROM people
+  LEFT OUTER JOIN people_pets
+    ON people.id = people_pets.owner_id
+#        AND group_elements.GroupID = 3
+  LEFT OUTER JOIN pets
+    ON people_pets.pet_id = pets.id
+
+
+#Select pets with more than 1 owner
+SELECT people.name, pets.animal, pets.name
+FROM people
+  INNER JOIN people_pets
+    ON people.id = people_pets.owner_id AND (
+    SELECT COUNT(*) FROM people_pets p WHERE p.pet_id=people_pets.pet_id
+  ) > 1
+  #        AND group_elements.GroupID = 3
+INNER JOIN pets
+    ON people_pets.pet_id = pets.id
+
